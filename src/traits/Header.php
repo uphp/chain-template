@@ -13,8 +13,8 @@ trait Header{
 
     public function endHeader()
     {
-        $header = self::endDiv();
-        $header .= "</header>";
+        $header = self::endDiv() . self::$sufixLine;
+        $header .= "</header>" . self::$sufixLine;
         return $header;
     }
 
@@ -49,16 +49,13 @@ trait Header{
 
     public function endHeaderPullRight()
     {
-        return self::endDiv();
+        return self::endDiv() . self::$sufixLine;
     }
 
     public function headerLogo(Array $options=[])
     {
-        //$options["src"] => caminho da imagem
-        if (! isset($options["src"])) $options["src"] = App::$templateConfig["logo_src"];
-
         $logo = "<a href=\"/\" class=\"logo\">" . self::$sufixLine;
-        $logo .= "<img src=\"" . $options["src"] . "\" alt=\"\" />" . self::$sufixLine;
+        $logo .= "<img src=\"" . self::$templateLanguage->logo_src() . "\" alt=\"\" />" . self::$sufixLine;
         $logo .= "</a>" . self::$sufixLine;
 
         return $logo;
@@ -66,12 +63,9 @@ trait Header{
 
     public function menuCollapse()
     {
-        $collapse = "<div class=\"pull-right\">" . self::$sufixLine;
-        $collapse .= "<a href=\"\" class=\"menu-collapse\">" . self::$sufixLine;
+        $collapse = "<a href=\"\" class=\"menu-collapse\">" . self::$sufixLine;
         $collapse .= "<i class=\"fa fa-bars\"></i>" . self::$sufixLine;
         $collapse .= "</a>" . self::$sufixLine;
-        $collapse .= "</div>" . self::$sufixLine;
-        $collapse .= "</div>" . self::$sufixLine;
         return $collapse;
     }
 
@@ -79,7 +73,7 @@ trait Header{
     {
         $button = "<div class=\"btn-group btn-group-option\">" . self::$sufixLine;
         $button .= "<button type=\"button\" class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\">" . self::$sufixLine;
-        $button .= "Opções <i class=\"fa fa-caret-down\"></i>" . self::$sufixLine;
+        $button .= self::$templateLanguage->header_options_label() . " <i class=\"fa fa-caret-down\"></i>" . self::$sufixLine;
         $button .= "</button>" . self::$sufixLine;
         return $button;
     }
@@ -102,7 +96,7 @@ trait Header{
 
     public function headerOptionsItems(){
         $optionItem = "";
-        foreach (App::$templateConfig["header_options_items"] as $label => $arr) {
+        foreach (self::$templateLanguage->header_options_items() as $label => $arr) {
             if ($arr == "DIVIDER") {
                 $optionItem .= $this->headerOptionsItemDivider();
             } else {

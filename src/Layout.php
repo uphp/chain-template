@@ -5,6 +5,7 @@ require("traits/Header.php");
 require("traits/Section.php");
 
 use UPhp\web\Application as App;
+use UPhp\Languages\Label;
 
 class Layout{
 
@@ -12,6 +13,12 @@ class Layout{
     use \UPhp\ActionView\Template\Traits\ChainTemplate\Section;
 
     public static $sufixLine = "\n";
+    public static $templateLanguage;
+
+    public function __construct()
+    {
+        self::$templateLanguage = Label::getLayoutLanguage(App::$appConfig["lang"]);
+    }
 
     public function html()
     {
@@ -29,20 +36,15 @@ class Layout{
         return "</html>";
     }
 
-    public function head($viewObject, Array $options=[])
+    public function head($viewObject)
     {
-        //title => Titulo da página
-        if (! isset($options["title"])) $options["title"] = App::$templateConfig["title"];
-        //theme => Tema do css
-        if (! isset($options["theme"])) $options["theme"] = App::$templateConfig["theme"];
-
         $head = "<head>" . self::$sufixLine;
         $head .= "<meta charset=\"" . App::$appConfig["charset"] . "\">" . self::$sufixLine;
         $head .= "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0\">" . self::$sufixLine;
         $head .= "<meta name=\"description\" content=\"" . App::$appConfig["description"] . "\">" . self::$sufixLine;
         $head .= "<meta name=\"author\" content=\"" . App::$appConfig["author"] . "\">" . self::$sufixLine;
-        $head .= "<title>" . $options["title"] . "</title>" . self::$sufixLine;
-        $head .= "<link href=\"/assets/css/style." . $options["theme"] . ".css\" rel=\"stylesheet\">" . self::$sufixLine;
+        $head .= "<title>" . self::$templateLanguage->title() . "</title>" . self::$sufixLine;
+        $head .= "<link href=\"/assets/css/style." . self::$templateLanguage->theme() . ".css\" rel=\"stylesheet\">" . self::$sufixLine;
         $head .= "<link href=\"/assets/uphp/uphp.css\" rel=\"stylesheet\">" . self::$sufixLine;
         $head .= file_get_contents("app/views/" . $viewObject->controllerName . "/assets/css/includeCSS.php") . self::$sufixLine;
         $head .= "<link href=\"/app/views/" . $viewObject->controllerName . "/assets/css/" . $viewObject->actionName . ".css\" rel=\"stylesheet\">" . self::$sufixLine;
@@ -62,22 +64,22 @@ class Layout{
 
     public function endBody()
     {
-        return "</body>";
+        return "</body>" . self::$sufixLine;
     }
 
     public function javascripts($viewObject)
     {
-        $js = "<script src=\"/assets/js/jquery-1.11.1.min.js\"></script>";
-        $js .= "<script src=\"/assets/js/jquery-migrate-1.2.1.min.js\"></script>";
-        $js .= "<script src=\"/assets/js/bootstrap.min.js\"></script>";
-        $js .= "<script src=\"/assets/js/modernizr.min.js\"></script>";
-        $js .= "<script src=\"/assets/js/pace.min.js\"></script>";
-        $js .= "<script src=\"/assets/js/retina.min.js\"></script>";
-        $js .= "<script src=\"/assets/js/jquery.cookies.js\"></script>";
-        $js .= "<script src=\"/assets/js/custom.js\"></script>";
-        $js .= "<script src=\"/assets/uphp/uphp.js\"></script>";
-        $js .= file_get_contents("app/views/" . $viewObject->controllerName . "/assets/js/includeJS.php");
-        $js .= "<script src=\"/app/views/" . $viewObject->controllerName . "/assets/js/" . $viewObject->actionName . ".js\"></script>";
+        $js = "<script src=\"/assets/js/jquery-1.11.1.min.js\"></script>" . self::$sufixLine;
+        $js .= "<script src=\"/assets/js/jquery-migrate-1.2.1.min.js\"></script>" . self::$sufixLine;
+        $js .= "<script src=\"/assets/js/bootstrap.min.js\"></script>" . self::$sufixLine;
+        $js .= "<script src=\"/assets/js/modernizr.min.js\"></script>" . self::$sufixLine;
+        $js .= "<script src=\"/assets/js/pace.min.js\"></script>" . self::$sufixLine;
+        $js .= "<script src=\"/assets/js/retina.min.js\"></script>" . self::$sufixLine;
+        $js .= "<script src=\"/assets/js/jquery.cookies.js\"></script>" . self::$sufixLine;
+        $js .= "<script src=\"/assets/js/custom.js\"></script>" . self::$sufixLine;
+        $js .= "<script src=\"/assets/uphp/uphp.js\"></script>" . self::$sufixLine;
+        $js .= file_get_contents("app/views/" . $viewObject->controllerName . "/assets/js/includeJS.php") . self::$sufixLine;
+        $js .= "<script src=\"/app/views/" . $viewObject->controllerName . "/assets/js/" . $viewObject->actionName . ".js\"></script>" . self::$sufixLine;
 
         return $js;
     }
