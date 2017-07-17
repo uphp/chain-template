@@ -55,7 +55,7 @@ trait Header{
     public function headerLogo(Array $options=[])
     {
         $logo = "<a href=\"/\" class=\"logo\">" . self::$sufixLine;
-        $logo .= "<img src=\"" . self::$templateLanguage->logo_src() . "\" alt=\"\" />" . self::$sufixLine;
+        $logo .= "<img src=\"" . self::$templateLanguage["logo_src"] . "\" alt=\"\" />" . self::$sufixLine;
         $logo .= "</a>" . self::$sufixLine;
 
         return $logo;
@@ -73,7 +73,7 @@ trait Header{
     {
         $button = "<div class=\"btn-group btn-group-option\">" . self::$sufixLine;
         $button .= "<button type=\"button\" class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\">" . self::$sufixLine;
-        $button .= self::$templateLanguage->header_options_label() . " <i class=\"fa fa-caret-down\"></i>" . self::$sufixLine;
+        $button .= self::$templateLanguage["header_options_label"] . " <i class=\"fa fa-caret-down\"></i>" . self::$sufixLine;
         $button .= "</button>" . self::$sufixLine;
         return $button;
     }
@@ -96,7 +96,7 @@ trait Header{
 
     public function headerOptionsItems(){
         $optionItem = "";
-        foreach (self::$templateLanguage->header_options_items() as $label => $arr) {
+        foreach (self::$templateLanguage["header_options_items"] as $label => $arr) {
             if ($arr == "DIVIDER") {
                 $optionItem .= $this->headerOptionsItemDivider();
             } else {

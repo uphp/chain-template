@@ -17,7 +17,7 @@ class Layout{
 
     public function __construct()
     {
-        self::$templateLanguage = Label::getLayoutLanguage(App::$appConfig["lang"]);
+        self::$templateLanguage = Label::get("ChainTemplate", App::$appConfig["lang"], "template");
     }
 
     public function html()
@@ -43,8 +43,8 @@ class Layout{
         $head .= "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0\">" . self::$sufixLine;
         $head .= "<meta name=\"description\" content=\"" . App::$appConfig["description"] . "\">" . self::$sufixLine;
         $head .= "<meta name=\"author\" content=\"" . App::$appConfig["author"] . "\">" . self::$sufixLine;
-        $head .= "<title>" . self::$templateLanguage->title() . "</title>" . self::$sufixLine;
-        $head .= "<link href=\"/assets/css/style." . self::$templateLanguage->theme() . ".css\" rel=\"stylesheet\">" . self::$sufixLine;
+        $head .= "<title>" . self::$templateLanguage["title"] . "</title>" . self::$sufixLine;
+        $head .= "<link href=\"/assets/css/style." . self::$templateLanguage["theme"] . ".css\" rel=\"stylesheet\">" . self::$sufixLine;
         $head .= "<link href=\"/assets/uphp/uphp.css\" rel=\"stylesheet\">" . self::$sufixLine;
         $head .= file_get_contents("app/views/" . $viewObject->controllerName . "/assets/css/includeCSS.php") . self::$sufixLine;
         $head .= "<link href=\"/app/views/" . $viewObject->controllerName . "/assets/css/" . $viewObject->actionName . ".css\" rel=\"stylesheet\">" . self::$sufixLine;

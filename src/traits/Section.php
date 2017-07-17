@@ -28,12 +28,12 @@ trait Section{
 
     public function profile(){
         $profile = "<div class=\"media profile-left\">" . self::$sufixLine;
-        $profile .= "<a class=\"pull-left profile-thumb\" href=\"" . self::$templateLanguage->profile_url() . "\">" . self::$sufixLine;
-        $profile .= "<img class=\"img-circle\" src=\"" . self::$templateLanguage->profile_photo() . "\" alt=\"\">" . self::$sufixLine;
+        $profile .= "<a class=\"pull-left profile-thumb\" href=\"" . self::$templateLanguage["profile_url"] . "\">" . self::$sufixLine;
+        $profile .= "<img class=\"img-circle\" src=\"" . self::$templateLanguage["profile_photo"] . "\" alt=\"\">" . self::$sufixLine;
         $profile .= "</a>" . self::$sufixLine;
         $profile .= "<div class=\"media-body\">" . self::$sufixLine;
-        $profile .= "<h4 class=\"media-heading\">" . self::$templateLanguage->profile_name() . "</h4>" . self::$sufixLine;
-        $profile .= "<small class=\"text-muted\">" . self::$templateLanguage->profile_office() . "</small>" . self::$sufixLine;
+        $profile .= "<h4 class=\"media-heading\">" . self::$templateLanguage["profile_name"] . "</h4>" . self::$sufixLine;
+        $profile .= "<small class=\"text-muted\">" . self::$templateLanguage["profile_office"] . "</small>" . self::$sufixLine;
         $profile .= self::endDiv();
         $profile .= self::endDiv();
 
@@ -41,9 +41,9 @@ trait Section{
     }
 
     public function menu(){
-        $menu = "<h5 class=\"leftpanel-title\">" . self::$templateLanguage->menu_title() . "</h5>" . self::$sufixLine;
+        $menu = "<h5 class=\"leftpanel-title\">" . self::$templateLanguage["menu_title"] . "</h5>" . self::$sufixLine;
         $menu .= "<ul class=\"nav nav-pills nav-stacked\">" . self::$sufixLine;
-        foreach (self::$templateLanguage->menu_items() as $label => $item) {
+        foreach (self::$templateLanguage["menu_items"] as $label => $item) {
             $menu .= "<li><a href=\"" . $item["url"] . "\"><i class=\"" . $item["class"] . "\"></i><span>" . $label . "</span></a></li>" . self::$sufixLine;
         }
         $menu .= "</ul>" . self::$sufixLine;
