@@ -3,6 +3,7 @@ namespace UPhp\ActionView\Templates\ChainTemplate;
 
 require("traits/Header.php");
 require("traits/Section.php");
+require("traits/Components.php");
 
 use UPhp\web\Application as App;
 use UPhp\Languages\Label;
@@ -11,13 +12,17 @@ class Layout{
 
     use \UPhp\ActionView\Template\Traits\ChainTemplate\Header;
     use \UPhp\ActionView\Template\Traits\ChainTemplate\Section;
+    use \UPhp\ActionView\Template\Traits\ChainTemplate\Components;
 
     public static $sufixLine = "\n";
     public static $templateLanguage;
+    public static $componentLanguage;
 
     public function __construct()
     {
-        self::$templateLanguage = Label::get("ChainTemplate", App::$appConfig["lang"], "template");
+        $application = new App();
+        self::$templateLanguage = Label::get("ChainTemplate", $application->context()->lang(), "template");
+        self::$componentLanguage = Label::get($application->context()->controllerName(), $application->context()->lang(), "ChainComponents");
     }
 
     public function html()
